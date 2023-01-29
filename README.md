@@ -10,3 +10,5 @@ UDP
 g++ -o build/udpclient udpclient.cpp
 
 ./udpclient [host] [port]
+
+https://beej.us/guide/bgnet/
