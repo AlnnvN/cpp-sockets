@@ -60,16 +60,18 @@ void openConnection(const char *HOST_NAME, const char *PORT)
         {
             // maybe try to implement exception with strerror(errno), error string may be useful
             throw SocketException("Couldn't connect to remote host - connect()");
+            return;
         }
 
         //********* Taking user input for the message - temporary and socket-wise unrelated. TESTING PURPOSES ONLY **********
-        char * message = new char[256];
+        char *message = new char[256];
         memset(message, 0, sizeof(message));
         std::cout << "Enter a message: ";
-        std::cin.getline(message,256);
+        std::cin.getline(message, 256);
         if (message == 0)
         {
             std::cout << "Error reading message";
+            return;
         }
         ///***********************************************************************************************************///
 
@@ -80,7 +82,6 @@ void openConnection(const char *HOST_NAME, const char *PORT)
             throw SocketException("Couldn't send the message to the server - send()");
             return;
         }
-
 
         delete (message); // TESTING PURPOSES ONLY
 
@@ -96,7 +97,7 @@ void openConnection(const char *HOST_NAME, const char *PORT)
 
     catch (std::exception exception)
     {
-        std::cout << "std::exception - Default exception in openConnection()" << std::endl;
+        std::cout << "std::exception - Default exception at openConnection()" << std::endl;
         return;
     }
 
@@ -111,7 +112,7 @@ int main(int argc, char *argv[])
     }
     catch (std::exception exception)
     {
-        std::cout << "Default exception in main()" << std::endl;
+        std::cout << "std::exception - Default exception at main()" << std::endl;
         return 0;
     }
     return 0;
