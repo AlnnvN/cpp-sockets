@@ -67,11 +67,11 @@ void openConnection(const char *HOST_NAME, const char *PORT)
         }
         ///***********************************************************************************************************///
 
-        // Sends message to the stored socket descriptor - send()
+        // Sends message to the stored socket descriptor - sendto()
         if (sendto(socketFileDescriptor, message, strlen(message), 0, serverInfo->ai_addr, serverInfo->ai_addrlen) < 0)
         {
             // maybe try to implement exception with strerror(errno), error string may be useful
-            throw SocketException("Couldn't send the message to the server - send()");
+            throw SocketException("Couldn't send the message to the server - sendto()");
             return;
         }
 
