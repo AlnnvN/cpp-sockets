@@ -68,21 +68,21 @@ void openConnection(const char *HOST_NAME, const char *PORT){
         hints.ai_family     = AF_UNSPEC;
         hints.ai_socktype   = SOCK_STREAM; //TCP
 
-        //Getting server info from the initial addrinfo (hints), HOST/IP and port
+        //Getting server info from the initial addrinfo (hints), HOST/IP and port - getaddrinfo()
         if((getAddrStatus = getaddrinfo(HOST_NAME, PORT, &hints, &serverInfo)) != 0){
             //tests may be needed for port length ---> gai_strerror() exceptions not clear
             throw SocketException(gai_strerror(getAddrStatus)); 
             return;
         }
 
-        //File Descriptor/Socket Descriptor created based on the serverInfo 
+        //File Descriptor/Socket Descriptor created based on the serverInfo - socket()
         if((socketFileDescriptor = socket(serverInfo->ai_family, serverInfo->ai_socktype, serverInfo->ai_protocol)) == -1){
             //maybe try to implement exception with strerror(errno), error string may be useful
             throw SocketException("Couldn't create file descriptor - socket()");
             return;
         }
 
-        //Connects to remote host
+        //Connects to remote host - connect()
         if(connect(socketFileDescriptor, serverInfo->ai_addr, serverInfo->ai_addrlen) < 0){
             //maybe try to implement exception with strerror(errno), error string may be useful
             throw SocketException("Couldn't connect to remote host - connect()");
