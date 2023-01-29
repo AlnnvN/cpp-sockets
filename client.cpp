@@ -62,6 +62,30 @@ void openConnection(const char *HOST_NAME, const char *PORT)
             throw SocketException("Couldn't connect to remote host - connect()");
         }
 
+        //********* Taking user input for the message - temporary and socket-wise unrelated. TESTING PURPOSES ONLY **********
+        char * message = new char[256];
+        memset(message, 0, sizeof(message));
+        std::cout << "Enter a message: ";
+        std::cin.getline(message,256);
+        if (message == 0)
+        {
+            std::cout << "Error reading message";
+        }
+        ///***********************************************************************************************************///
+
+        // Sends message to the stored socket descriptor - send()
+        if (send(socketFileDescriptor, message, strlen(message), 0) < 0)
+        {
+            // maybe try to implement exception with strerror(errno), error string may be useful
+            throw SocketException("Couldn't send the message to the server - send()");
+            return;
+        }
+
+
+        delete (message); // TESTING PURPOSES ONLY
+
+        close(socketFileDescriptor);
+
         freeaddrinfo(serverInfo); // getaddrinfo()'s linked tree, used in struct addrinfo *serverInfo, is freed;
     }
 
