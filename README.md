@@ -1,6 +1,12 @@
 # cpp-sockets
 Base implementation of a client and a server using native C++ UNIX socket libraries
 
-g++ -o build/client client.cpp
+TCP
+g++ -o build/tcpclient tcpclient.cpp
 
-./client [host] [port]
+./tcpclient [host] [port]
+
+UDP
+g++ -o build/udpclient udpclient.cpp
+
+./udpclient [host] [port]
